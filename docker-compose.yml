@@ -1,0 +1,21 @@
+version: "3"
+services:
+
+  # https://hub.docker.com/_/postgres
+  pgdefault:
+    image: postgres:15
+    hostname: pgdefault
+    container_name: pgdefault
+    restart: always
+    # expose:
+    #   - 5432
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      # PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      # - "../data/postgres/pgdefault/data:/var/lib/postgresql/data/pgdata"
