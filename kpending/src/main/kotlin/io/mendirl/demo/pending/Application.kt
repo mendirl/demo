@@ -1,11 +1,11 @@
-package io.mendirl.demo.kpending
+package io.mendirl.demo.pending
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class KpendingApplication
+class Application
 
 fun main(args: Array<String>) {
-	runApplication<KpendingApplication>(*args)
+	runApplication<Application>(*args)
 }

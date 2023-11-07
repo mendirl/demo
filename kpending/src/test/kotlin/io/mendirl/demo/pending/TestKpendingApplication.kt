@@ -1,4 +1,4 @@
-package io.mendirl.demo.kpending
+package io.mendirl.demo.pending
 
 import org.springframework.boot.fromApplication
 import org.springframework.boot.test.context.TestConfiguration
@@ -20,5 +20,5 @@ class TestKpendingApplication {
 }
 
 fun main(args: Array<String>) {
-	fromApplication<KpendingApplication>().with(TestKpendingApplication::class).run(*args)
+	fromApplication<Application>().with(TestKpendingApplication::class).run(*args)
 }
