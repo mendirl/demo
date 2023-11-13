@@ -2,8 +2,6 @@ package io.mendirl.demo.pending;
 
 import io.hypersistence.tsid.TSID;
 import io.mendirl.demo.pending.entity.PendingEntity;
-import io.mendirl.demo.pending.entity.TransactionEntity;
-import io.mendirl.demo.pending.entity.TxCoreEntity;
 import io.mendirl.demo.pending.repository.PendingRepository;
 import io.mendirl.demo.pending.service.PendingService;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,16 +19,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ActiveProfiles("test")
 @TestPropertySource(properties = {"spring.jpa.show-sql=true", "spring.jpa.open-in-view=false"})
-class PendingTest {
+class PendingServiceTest {
 
-//    @Autowired
-//    PendingService pendingService;
+    @Autowired
+    PendingService pendingService;
 
     @Autowired
     PendingRepository pendingRepository;
 
     TSID tsid = TSID.Factory.getTsid();
 
+    @Transactional
     @BeforeEach
     public void init() {
 //        var transactionToPersist = TransactionEntity.builder().name("transaction1:" + tsid).build();
@@ -45,7 +44,7 @@ class PendingTest {
 
     @Test
     void test_insert() {
-        var pendingretrievedV0 = pendingRepository.getReferenceById(1L);
+        var pendingretrievedV0 = pendingService.getReferenceById(1L);
 
         assertThat(pendingretrievedV0).isNotNull();
         assertThat(pendingretrievedV0.getId()).isNotNull();
@@ -54,7 +53,7 @@ class PendingTest {
 //        assertThat(pendingretrievedV0.getTransactions()).hasSize(1);
 
         pendingretrievedV0.setName(pendingretrievedV0.getName() + ":" + tsid);
-        var pendingretrievedV1 = pendingRepository.persist(pendingretrievedV0);
+        var pendingretrievedV1 = pendingService.save(pendingretrievedV0);
 
         assertThat(pendingretrievedV1).isNotNull();
         assertThat(pendingretrievedV1.getVersion()).isEqualTo((short)1);

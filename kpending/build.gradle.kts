@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -13,9 +14,6 @@ group = "io.mendirl.demo"
 version = "0.0.1-SNAPSHOT"
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
 	sourceCompatibility = JavaVersion.VERSION_21
 }
 
@@ -42,9 +40,9 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs += "-Xjsr305=strict"
-		jvmTarget = "21"
+	compilerOptions {
+		jvmTarget = JvmTarget.JVM_21
+		freeCompilerArgs.add("-Xjsr305=strict")
 	}
 }
 
