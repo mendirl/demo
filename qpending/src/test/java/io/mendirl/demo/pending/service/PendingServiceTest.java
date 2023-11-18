@@ -16,8 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PendingServiceTest {
 
     @Inject
-    EntityManager entityManager;
-    @Inject
     PendingService pendingService;
     @Inject
     PendingRepository pendingRepository;
@@ -27,19 +25,26 @@ class PendingServiceTest {
     @Transactional
     @BeforeEach
     public void init() {
-        var pendingToPersist = new PendingEntity().setName("pending1:" + tsid);
+        var pendingToPersist1 = new PendingEntity().setName("pending1:" + tsid);
+        pendingToPersist1.persistAndFlush();
 
-        pendingRepository.persistAndFlush(pendingToPersist);
+        var pendingToPersist2 = new PendingEntity().setName("pending2:" + tsid);
+        pendingRepository.persistAndFlush(pendingToPersist2);
     }
 
     @Test
     void test_insert() {
-        var pendingretrievedV0 = pendingService.getReferenceById(1L);
+        PendingEntity pendingretrieved1V0 = PendingEntity.findById(1L);
+        assertThat(pendingretrieved1V0).isNotNull();
+        assertThat(pendingretrieved1V0.getId()).isNotNull();
+        assertThat(pendingretrieved1V0.getName()).startsWith("pending1");
+        assertThat(pendingretrieved1V0.getVersion()).isEqualTo((short) 0);
 
-        assertThat(pendingretrievedV0).isNotNull();
-        assertThat(pendingretrievedV0.getId()).isNotNull();
-        assertThat(pendingretrievedV0.getName()).startsWith("pending1");
-        assertThat(pendingretrievedV0.getVersion()).isEqualTo((short) 0);
+        PendingEntity pendingretrieved2V0 = pendingService.getReferenceById(2L);
+        assertThat(pendingretrieved2V0).isNotNull();
+        assertThat(pendingretrieved2V0.getId()).isNotNull();
+        assertThat(pendingretrieved2V0.getName()).startsWith("pending2");
+        assertThat(pendingretrieved2V0.getVersion()).isEqualTo((short) 0);
     }
 
 

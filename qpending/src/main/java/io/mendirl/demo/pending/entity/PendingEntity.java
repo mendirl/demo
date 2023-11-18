@@ -1,5 +1,6 @@
 package io.mendirl.demo.pending.entity;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -10,11 +11,8 @@ import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
-public class PendingEntity /*extends PanacheEntity */ {
+public class PendingEntity extends PanacheEntity {
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
     @Version
     private Short version;
     private String name;
@@ -27,6 +25,7 @@ public class PendingEntity /*extends PanacheEntity */ {
         transaction.setPending(this);
     }
 
+    @GeneratedValue(strategy = IDENTITY)
     public Long getId() {
         return id;
     }

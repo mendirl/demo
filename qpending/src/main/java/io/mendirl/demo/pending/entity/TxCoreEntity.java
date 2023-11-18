@@ -1,5 +1,6 @@
 package io.mendirl.demo.pending.entity;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -9,11 +10,8 @@ import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
-public class TxCoreEntity {
+public class TxCoreEntity extends PanacheEntity {
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
     @Version
     private Short version;
     private String name;
@@ -25,6 +23,7 @@ public class TxCoreEntity {
         transaction.setTxCore(this);
     }
 
+    @GeneratedValue(strategy = IDENTITY)
     public Long getId() {
         return id;
     }
